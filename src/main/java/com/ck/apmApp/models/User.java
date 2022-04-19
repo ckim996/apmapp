@@ -1,10 +1,19 @@
 package com.ck.apmApp.models;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
+import com.ck.apmApp.security.models.Role;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -27,6 +36,14 @@ public class User
 	private String lastname;
 	private String username;
 	private String password;
+	
+	@ManyToMany(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
+	@JoinTable(
+			name="user_role",
+			joinColumns= {@JoinColumn(name="user_id")},
+			inverseJoinColumns= {@JoinColumn(name="role_id")}
+			)
+	Set<Role> roles = new HashSet<>();
 	
 	public User()
 	{
@@ -80,6 +97,14 @@ public class User
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 	
 }

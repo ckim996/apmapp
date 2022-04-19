@@ -8,4 +8,6 @@ import com.ck.apmApp.models.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
+	Employee findByUsername(String un);
+
 }

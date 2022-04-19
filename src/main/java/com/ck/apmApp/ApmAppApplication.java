@@ -16,7 +16,8 @@ public class ApmAppApplication {
 		return new SpringSecurityAuditorAware();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{ 
 		SpringApplication.run(ApmAppApplication.class, args);
 	}
 

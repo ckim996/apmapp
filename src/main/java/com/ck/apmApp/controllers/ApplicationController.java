@@ -18,6 +18,12 @@ public class ApplicationController
 		return "login";
 	}
 	
+	@GetMapping("/accessDenied")
+	public String accessDenied()
+	{
+		return "accessDenied";
+	}
+	
 	@GetMapping("/logout")
 	public String logout()
 	{

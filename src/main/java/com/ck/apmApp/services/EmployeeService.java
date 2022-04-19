@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ck.apmApp.models.Employee;
+import com.ck.apmApp.models.User;
 import com.ck.apmApp.repositories.EmployeeRepository;
+import com.ck.apmApp.repositories.UserRepository;
 
 @Service
 public class EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 
 	// Returns a list of employees
 	public List<Employee> findAll() {
@@ -31,5 +36,20 @@ public class EmployeeService {
 
 	public void delete(Integer id) {
 		employeeRepository.deleteById(id);
+	}
+
+	public Employee findByUserName(String un) {
+		return employeeRepository.findByUsername(un);
+	}
+	
+	public void assignUsername(int id)
+	{
+		Employee employee = employeeRepository.findById(id).orElse(null);
+		User user = userRepository.findByFirstnameAndLastname(
+				employee.getFirstname(),
+				employee.getLastname()
+				);
+		employee.setUsername(user.getUsername());
+		employeeRepository.save(employee);
 	}
 }
